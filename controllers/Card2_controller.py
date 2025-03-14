@@ -9,6 +9,8 @@ card2_bp = Blueprint("LilaCard", __name__)
 def create_location():
     data = request.json
     new_entry = LilaCard(
+        title=data.get("title"),
+        subtitle=data.get("subtitle"),
         order=data.get("order"),
         location=data.get("location"),
         details_button=data.get("details_button"),
@@ -43,6 +45,8 @@ def update_location(id):
     cards.images = data.get("images", cards.images)
     cards.order = data.get("order", cards.order)
     cards.display = data.get("display", cards.display)
+    cards.title = data.get("title", cards.title)
+    cards.subtitle = data.get("title", cards.subtitle)
 
     db.session.commit()
     return jsonify({"message": "Location updated", "data": cards.to_dict()}), 200

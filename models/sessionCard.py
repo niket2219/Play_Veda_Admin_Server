@@ -6,6 +6,8 @@ class LilaCard(db.Model):
     __tablename__ = "Lila_Card"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(255), nullable=False)
+    subtitle = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(255), default="template2")
     order = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(255), nullable=False)
@@ -17,6 +19,8 @@ class LilaCard(db.Model):
         """Convert model instance to dictionary for JSON responses."""
         return {
             "id": self.id,
+            "title": self.title,
+            "subtitle": self.subtitle,
             "type": self.type,
             "order": self.order,
             "location": self.location,
