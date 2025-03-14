@@ -9,19 +9,24 @@ def create_card():
     try:
         data = request.json
         new_card = Card1(
+            order=data.get("order"),
             title=data.get("title"),
             description=data.get("description"),
             isComingSoon=data.get("isComingSoon", False),
             imgUrl=data.get("imgUrl"),
+            display=data.get("display")
         )
         db.session.add(new_card)
         db.session.commit()
         return jsonify({"message": "Card created successfully!", "card": {
             "id": new_card.id,
+            "type": new_card.type,
+            "order": new_card.order,
             "title": new_card.title,
             "description": new_card.description,
             "isComingSoon": new_card.isComingSoon,
             "imgUrl": new_card.imgUrl,
+            "display": new_card.display
         }}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -34,10 +39,13 @@ def get_cards():
     result = [
         {
             "id": card.id,
+            "type": card.type,
+            "order": card.order,
             "title": card.title,
             "description": card.description,
             "isComingSoon": card.isComingSoon,
             "imgUrl": card.imgUrl,
+            "display": card.display
         }
         for card in cards
     ]
@@ -53,10 +61,13 @@ def get_card(id):
     return jsonify(
         {
             "id": card.id,
+            "type": card.type,
+            "order": card.order,
             "title": card.title,
             "description": card.description,
             "isComingSoon": card.isComingSoon,
             "imgUrl": card.imgUrl,
+            "display": card.display
         }
     ), 200
 
@@ -70,9 +81,11 @@ def update_card(id):
 
     data = request.json
     card.title = data.get("title", card.title)
+    card.order = data.get("order", card.order)
     card.description = data.get("description", card.description)
     card.isComingSoon = data.get("isComingSoon", card.isComingSoon)
     card.imgUrl = data.get("imgUrl", card.imgUrl)
+    card.display = data.get("display", card.display)
 
     db.session.commit()
     return jsonify({"message": "Card updated successfully!"}), 200
