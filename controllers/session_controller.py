@@ -10,6 +10,9 @@ session_bp = Blueprint("name", __name__)
 def create_session():
     try:
         theme = request.json.get("theme")
+        ageGroup = request.json.get("ageGroup")
+        batchSize = request.json.get("batchSize")
+        duration = request.json.get("duration")
         benefitsDesc = request.json.get("benefitsDesc")
         benefits = request.json.get("benefits", [])
         date = request.json.get("date")
@@ -23,6 +26,9 @@ def create_session():
 
         new_session = Session(
             theme=theme,
+            ageGroup=ageGroup,
+            batchSize=batchSize,
+            duration=duration,
             benefitsDesc=benefitsDesc,
             benefits=benefits,
             date=date,
@@ -53,6 +59,9 @@ def update_session(session_id):
         data = request.json
 
         session.theme = data.get("theme", session.theme)
+        session.ageGroup = data.get("ageGroup", session.ageGroup)
+        session.batchSize = data.get("batchSize", session.batchSize)
+        session.duration = data.get("duration", session.duration)
         session.benefitsDesc = data.get("benefitsDesc", session.benefitsDesc)
         session.benefits = data.get("benefits", session.benefits)
         session.date = data.get("date", session.date)
